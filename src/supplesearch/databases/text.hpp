@@ -6,18 +6,33 @@
 namespace SuppleSearch {
 namespace Databases {
 
+/**
+ * Text database is represented in single text file.
+ * Each Document is separated by empty line. First line
+ * of each Document represents title although title
+ * also is part of its content.
+ */
 class Text : public Database {
   public:
-    Text(const Tokenizer::shared tokenizer, const Stemmer::shared stemmer) :
-      tokenizer_(tokenizer), stemmer_(stemmer) { }
+    using Database::Database;
 
+    /**
+     * Insert new Documents from file into
+     * existing Database.
+     *
+     * @param filename Filename of the database
+     * @return Number of added documents
+     */
     size_t insert_from_file(std::string filename);
 
+    /**
+     * Create new Text Database from file.
+     *
+     * @param filename Filename of the database
+     * @return Database
+     */
     static Text build(std::string filename);
 
-  private:
-    Tokenizer::shared tokenizer_;
-    Stemmer::shared stemmer_;
 };
 
 }
