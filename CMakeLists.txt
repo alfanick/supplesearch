@@ -29,13 +29,24 @@ ExternalProject_Add(arma
 
   INSTALL_COMMAND ""
   UPDATE_COMMAND ""
-;)
+)
 
 ExternalProject_Get_Property(arma source_dir)
 set(ARMA_INCLUDES_DIR "${source_dir}/include")
 
 ExternalProject_Get_Property(arma binary_dir)
 set(ARMA_LIBS_DIR "${binary_dir}")
+
+ExternalProject_Add(porter
+  GIT_REPOSITORY "https://github.com/smassung/porter2_stemmer.git"
+  PREFIX "${EXT_PROJECTS_DIR}/porter"
+
+  INSTALL_COMMAND ""
+  UPDATE_COMMAND ""
+)
+
+ExternalProject_Get_Property(porter source_dir)
+set(PORTER_INCLUDES_DIR "${source_dir}")
 
 add_library(armadillo SHARED IMPORTED)
 set_target_properties(armadillo PROPERTIES IMPORT_LOCATION "${ARMA_LIBS_DIR}")

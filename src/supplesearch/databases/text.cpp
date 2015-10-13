@@ -1,7 +1,7 @@
 #include "text.hpp"
 
 #include "../tokenizers/whitespace.hpp"
-#include "../stemmers/dummy.hpp"
+#include "../stemmers/porter.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -42,7 +42,7 @@ size_t Text::insert_from_file(std::string filename) {
 
 Text Text::build(std::string filename) {
   Tokenizer::shared tokenizer(new Tokenizers::Whitespace());
-  Stemmer::shared stemmer(new Stemmers::Dummy());
+  Stemmer::shared stemmer(new Stemmers::Porter());
   Text db(tokenizer, stemmer);
 
   std::cout << db.insert_from_file(filename) << std::endl;
