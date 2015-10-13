@@ -1,15 +1,10 @@
-#include <iostream>
-#include <armadillo>
+#include <supplesearch/databases/text.hpp>
 
-using namespace std;
-using namespace arma;
+using namespace SuppleSearch;
 
 int main(int argc, char** argv)
-  {
-  mat A = randu<mat>(4000,5000);
-  mat B = randu<mat>(4000,5000);
-
-  cout << A*B.t() << endl;
+{
+  Databases::Text db = Databases::Text::build("data/documents.txt");
 
   return 0;
-  }
+}

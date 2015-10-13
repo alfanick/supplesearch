@@ -6,13 +6,12 @@ fi
 
 cd build
 
-make
+make install
 
 if [ "$?" != "0" ] ; then
   echo "Could not build!"
   exit 1
 fi
 
-make install
 
 cd ..
