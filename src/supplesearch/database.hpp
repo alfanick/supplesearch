@@ -10,7 +10,7 @@ namespace SuppleSearch {
 /**
  * List of Document
  */
-using DocumentList = std::vector<Document::unique>;
+using DocumentList = std::vector<Document::shared>;
 
 /**
  * Database is set of Document indexed in
@@ -33,14 +33,14 @@ class Database {
      *
      * @param document Document to add
      */
-    void insert(Document::unique document);
+    void insert(Document::shared document);
 
     /**
      * Remove a document from the database
      *
      * @param document Document to remove
      */
-    void remove(Document::unique document);
+    void remove(Document::shared document);
 
     /**
      * Return available Document

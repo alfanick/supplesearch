@@ -46,6 +46,13 @@ class Document {
      */
     WordList stemmed_content() { return stemmed_content_; }
 
+    /**
+     * Document title
+     *
+     * @return Title
+     */
+    const std::string title() { return title_; }
+
   private:
     //! Document title
     std::string title_;
