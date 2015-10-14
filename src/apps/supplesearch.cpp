@@ -1,9 +1,5 @@
-#include <supplesearch/databases/text.hpp>
-#include <supplesearch/algorithms/term_frequency.hpp>
-#include <supplesearch/algorithms/inverse_document_frequency.hpp>
-#include <supplesearch/algorithms/tfidf.hpp>
-
 #include <supplesearch/engine.hpp>
+#include <supplesearch/databases/text.hpp>
 #include <supplesearch/measures/cosine.hpp>
 
 #include <iostream>
