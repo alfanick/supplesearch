@@ -44,6 +44,13 @@ class Engine {
      */
     ResultList query(const std::string q);
 
+    /**
+     * Unique keywords
+     *
+     * @return Keywords
+     */
+    WordList keywords() { return keywords_; }
+
   private:
     //! Used measure
     Measure::shared measure_;

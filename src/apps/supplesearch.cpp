@@ -18,15 +18,14 @@ int main(int argc, char** argv)
   Databases::Text::shared db(Databases::Text::build(argv[1]));
   Databases::Text::shared keywords(Databases::Text::build(argv[2]));
   Measure::shared measure(new Measures::Cosine());
+  Engine engine(db, keywords, measure);
 
   // Algorithms::InverseDocumentFrequency idf(db);
-  // auto qt = idf.process(keywords->documents().front()->stemmed_content());
+  // auto qt = idf.process(engine.keywords());
   // int i = 0;
-  // for (auto stem : keywords->documents().front()->stemmed_content()) {
+  // for (auto stem : engine.keywords()) {
   //   std::cout << qt(i++) << "\t" << stem << std::endl;
   // }
-
-  Engine engine(db, keywords, measure);
 
   auto results = engine.query(argv[3]);
 

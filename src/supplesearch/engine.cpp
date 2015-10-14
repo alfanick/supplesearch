@@ -1,16 +1,21 @@
 #include "engine.hpp"
 
 #include <algorithm>
+#include <set>
 
 using namespace SuppleSearch;
 
 Engine::Engine(const Database::shared database, const Database::shared keywords, const Measure::shared measure) :
   measure_(measure),
   database_(database) {
+  std::set<std::string> s;
+
   for (auto document : keywords->documents()) {
     auto stemmed = document->stemmed_content();
-    keywords_.insert(keywords_.end(), stemmed.begin(), stemmed.end());
+    s.insert(stemmed.begin(), stemmed.end());
   }
+
+  keywords_.insert(keywords_.end(), s.begin(), s.end());
 
   measure_->keywords(keywords_);
   measure_->database(database_);
