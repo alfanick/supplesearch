@@ -8,8 +8,4 @@ Document::Document(std::string title, std::string content, Tokenizer::shared tok
   title_(title), content_(content)
 {
   stemmed_content_ = stemmer->process(tokenizer->process(content));
-  for (auto& k : stemmed_content_) {
-    std::cout << k << "|";
-  }
-  std::cout << std::endl;
 }

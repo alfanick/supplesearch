@@ -3,7 +3,6 @@
 #include "../tokenizers/whitespace.hpp"
 #include "../stemmers/porter.hpp"
 
-#include <iostream>
 #include <fstream>
 
 using namespace SuppleSearch::Databases;
@@ -26,8 +25,10 @@ size_t Text::insert_from_file(std::string filename) {
       current_document += line;
       current_document += "\n";
 
-      if (current_title.empty())
+      if (current_title.empty()) {
+        line.erase(line.find("\r", 0));
         current_title = line;
+      }
     }
   }
 
@@ -45,7 +46,7 @@ Text::shared Text::build(std::string filename) {
   Stemmer::shared stemmer(new Stemmers::Porter());
   Text::shared db(new Text(tokenizer, stemmer));
 
-  std::cout << db->insert_from_file(filename) << std::endl;
+  db->insert_from_file(filename);
 
   return db;
 }
