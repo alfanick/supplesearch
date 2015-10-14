@@ -26,7 +26,8 @@ size_t Text::insert_from_file(std::string filename) {
       current_document += "\n";
 
       if (current_title.empty()) {
-        line.erase(line.find("\r", 0));
+        if (line.find("\r", 0) != std::string::npos)
+          line.erase(line.find("\r", 0));
         current_title = line;
       }
     }

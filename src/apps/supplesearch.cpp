@@ -26,7 +26,7 @@ int main(int argc, char** argv)
   auto results = engine.query(argv[3]);
 
   for (auto result : results) {
-    if (!isnan(result.first)) {
+    if (!isnan(result.first) && (result.first > 0)) {
       std::cout << result.second->title() << " " << result.first << std::endl;
     }
   }
