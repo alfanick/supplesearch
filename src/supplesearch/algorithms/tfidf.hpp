@@ -11,6 +11,9 @@ namespace Algorithms {
  */
 class TFIDF {
   public:
+    //! Shared pointer
+    typedef std::shared_ptr<TFIDF> shared;
+
     /**
      * Create instance of TFIDF working
      * on given keywords.
@@ -27,6 +30,16 @@ class TFIDF {
      * @return TFIDF representation
      */
     arma::mat process(SuppleSearch::Database::shared database);
+
+    /**
+     * Calculate TFIDF of query outside
+     * the Database.
+     *
+     * @param dataase Database to process
+     * @param document Query
+     * @return TFIDF representation
+     */
+    arma::vec process(SuppleSearch::Database::shared database, SuppleSearch::Document::shared document);
 
   private:
     //! Keywords to process

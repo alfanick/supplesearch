@@ -3,24 +3,32 @@
 #include <supplesearch/algorithms/inverse_document_frequency.hpp>
 #include <supplesearch/algorithms/tfidf.hpp>
 
+#include <supplesearch/engine.hpp>
+#include <supplesearch/measures/cosine.hpp>
+
 #include <iostream>
 
 using namespace SuppleSearch;
 
 int main(int argc, char** argv)
 {
-  if (argc != 3) {
-    std::cout << "Usage: ss database keywords" << std::endl;
+  if (argc != 4) {
+    std::cout << "Usage: ss database keywords query" << std::endl;
     return 1;
   }
 
   Databases::Text::shared db(Databases::Text::build(argv[1]));
   Databases::Text::shared keywords(Databases::Text::build(argv[2]));
+  Measure::shared measure(new Measures::Cosine());
 
-  auto kw = keywords->documents().front()->stemmed_content();
+  Engine engine(db, keywords, measure);
 
-  Algorithms::TFIDF tfidf(kw);
-  tfidf.process(db).t().raw_print();
+  auto results = engine.query(argv[3]);
+
+  for (auto result : results) {
+    std::cout << result.second->title() << " " << result.first << std::endl;
+  }
+
 
   return 0;
 }

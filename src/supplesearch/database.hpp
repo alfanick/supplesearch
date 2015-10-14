@@ -56,6 +56,17 @@ class Database {
      */
     DocumentList& documents() { return documents_; }
 
+    /**
+     * Build new Document using existing
+     * Tokenizer and Stemmer. Does not insert
+     * the document into the database.
+     *
+     * @param title Document title
+     * @param content Document content
+     * @return New document
+     */
+    Document::shared build_document(std::string title, std::string content);
+
   protected:
     //! Tokenizer used for documents
     Tokenizer::shared tokenizer_;

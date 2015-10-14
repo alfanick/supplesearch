@@ -5,7 +5,7 @@
 using namespace SuppleSearch;
 
 void Database::insert(Document::shared document) {
-  documents_.push_back(std::move(document));
+  documents_.push_back(document);
 }
 
 void Database::remove(Document::shared document) {
@@ -14,4 +14,9 @@ void Database::remove(Document::shared document) {
                                document),
                    documents_.end());
 
+}
+
+Document::shared Database::build_document(std::string title, std::string content) {
+  Document::shared document(new Document(title, content, tokenizer_, stemmer_));
+  return document;
 }
