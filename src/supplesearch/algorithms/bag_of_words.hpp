@@ -10,14 +10,13 @@ namespace Algorithms {
 
 class BagOfWords {
   public:
-    BagOfWords(SuppleSearch::Database::shared keywords);
+    BagOfWords(SuppleSearch::WordList keywords);
 
     arma::vec process(SuppleSearch::Document::shared document);
     arma::mat process(SuppleSearch::Database::shared database);
 
   private:
     SuppleSearch::WordList keywords_;
-    SuppleSearch::Database::shared keywords_database_;
 };
 
 }

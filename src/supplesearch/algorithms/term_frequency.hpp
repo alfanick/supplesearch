@@ -8,7 +8,7 @@ namespace Algorithms {
 
 class TermFrequency {
   public:
-    TermFrequency(SuppleSearch::Database::shared keywords);
+    TermFrequency(const SuppleSearch::WordList keywords);
 
     arma::vec process(SuppleSearch::Document::shared document);
     arma::mat process(SuppleSearch::Database::shared database);

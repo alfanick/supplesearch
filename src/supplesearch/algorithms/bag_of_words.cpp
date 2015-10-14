@@ -4,12 +4,7 @@
 
 using namespace SuppleSearch::Algorithms;
 
-BagOfWords::BagOfWords(SuppleSearch::Database::shared keywords) : keywords_database_(keywords) {
-  for (auto& document : keywords->documents()) {
-    auto stemmed = document->stemmed_content();
-    keywords_.insert(keywords_.end(), stemmed.begin(), stemmed.end());
-  }
-
+BagOfWords::BagOfWords(SuppleSearch::WordList keywords) : keywords_(keywords) {
 }
 
 arma::vec BagOfWords::process(SuppleSearch::Document::shared document) {

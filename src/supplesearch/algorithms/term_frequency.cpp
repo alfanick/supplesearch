@@ -2,7 +2,7 @@
 
 using namespace SuppleSearch::Algorithms;
 
-TermFrequency::TermFrequency(SuppleSearch::Database::shared keywords) :
+TermFrequency::TermFrequency(const SuppleSearch::WordList keywords) :
   bag_of_words_(keywords) {
 }
 

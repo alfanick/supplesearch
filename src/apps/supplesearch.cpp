@@ -1,6 +1,7 @@
 #include <supplesearch/databases/text.hpp>
-#include <supplesearch/algorithms/bag_of_words.hpp>
 #include <supplesearch/algorithms/term_frequency.hpp>
+#include <supplesearch/algorithms/inverse_document_frequency.hpp>
+#include <supplesearch/algorithms/tfidf.hpp>
 
 #include <iostream>
 
@@ -16,8 +17,10 @@ int main(int argc, char** argv)
   Databases::Text::shared db(Databases::Text::build(argv[1]));
   Databases::Text::shared keywords(Databases::Text::build(argv[2]));
 
-  Algorithms::TermFrequency tf(keywords);
-  tf.process(db).t().raw_print();
+  auto kw = keywords->documents().front()->stemmed_content();
+
+  Algorithms::TFIDF tfidf(kw);
+  tfidf.process(db).t().raw_print();
 
   return 0;
 }
