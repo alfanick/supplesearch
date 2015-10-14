@@ -40,12 +40,12 @@ size_t Text::insert_from_file(std::string filename) {
   return added;
 }
 
-Text Text::build(std::string filename) {
+Text::shared Text::build(std::string filename) {
   Tokenizer::shared tokenizer(new Tokenizers::Whitespace());
   Stemmer::shared stemmer(new Stemmers::Porter());
-  Text db(tokenizer, stemmer);
+  Text::shared db(new Text(tokenizer, stemmer));
 
-  std::cout << db.insert_from_file(filename) << std::endl;
+  std::cout << db->insert_from_file(filename) << std::endl;
 
   return db;
 }

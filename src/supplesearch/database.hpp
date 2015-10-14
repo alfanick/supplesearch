@@ -15,9 +15,16 @@ using DocumentList = std::vector<Document::shared>;
 /**
  * Database is set of Document indexed in
  * SuppleSearch
- * */
+ */
 class Database {
   public:
+    //! Unique pointer
+    typedef std::unique_ptr<Database> unique;
+    //! Shared pointer
+    typedef std::shared_ptr<Database> shared;
+    //! Weak pointer
+    typedef std::weak_ptr<Database> weak;
+
     /**
      * Create new Database, uses given tokenizer and stemmer
      * for new Document.

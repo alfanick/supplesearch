@@ -16,6 +16,9 @@ class Text : public Database {
   public:
     using Database::Database;
 
+    //! Shared pointer
+    typedef std::shared_ptr<Text> shared;
+
     /**
      * Insert new Documents from file into
      * existing Database.
@@ -31,7 +34,7 @@ class Text : public Database {
      * @param filename Filename of the database
      * @return Database
      */
-    static Text build(std::string filename);
+    static Text::shared build(std::string filename);
 
 };
 
