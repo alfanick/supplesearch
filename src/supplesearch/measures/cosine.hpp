@@ -13,6 +13,7 @@ class Cosine : public Measure {
   public:
     void keywords(WordList k) override;
     void query(Document::shared q) override;
+    arma::vec compare() override;
     double compare(Document::shared d) override;
 
   private:

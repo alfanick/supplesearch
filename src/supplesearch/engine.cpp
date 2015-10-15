@@ -26,8 +26,11 @@ ResultList Engine::query(const Document::shared q) {
 
   measure_->query(q);
 
-  for (auto document : database_->documents()) {
-    result.push_back(std::make_pair(measure_->compare(document), document));
+  auto scores = measure_->compare();
+
+  int i = 0;
+  for (const auto& document : database_->documents()) {
+    result.push_back(std::make_pair(scores(i++), document));
   }
 
   std::sort(result.rbegin(), result.rend());
