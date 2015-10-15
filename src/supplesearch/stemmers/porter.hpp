@@ -3,6 +3,8 @@
 
 #include "../stemmer.hpp"
 
+#include <memory>
+
 #include <porter2_stemmer.h>
 
 namespace SuppleSearch {

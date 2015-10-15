@@ -3,6 +3,8 @@
 
 #include "tokenizer.hpp"
 
+#include <memory>
+
 namespace SuppleSearch {
 
 /**

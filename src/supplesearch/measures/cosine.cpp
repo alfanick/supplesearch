@@ -1,11 +1,13 @@
 #include "cosine.hpp"
 
+#include <memory>
+
 using namespace SuppleSearch::Measures;
 
 void Cosine::keywords(WordList k) {
   Measure::keywords(k);
 
-  tfidf_ = tfidf_.make_shared(k);
+  tfidf_ = std::make_shared<SuppleSearch::Algorithms::TFIDF>(k);
 }
 
 void Cosine::query(SuppleSearch::Document::shared document) {

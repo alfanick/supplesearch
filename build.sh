@@ -6,7 +6,7 @@ fi
 
 cd build
 
-make -j install
+make install
 
 if [ "$?" != "0" ] ; then
   echo "Could not build!"

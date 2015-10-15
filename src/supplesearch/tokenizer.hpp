@@ -1,6 +1,7 @@
 #ifndef ALJ_SUPPLESEARCH_TOKENIZER_HPP_
 #define ALJ_SUPPLESEARCH_TOKENIZER_HPP_
 
+#include <memory>
 #include <vector>
 #include <string>
 

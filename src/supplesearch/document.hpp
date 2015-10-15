@@ -1,6 +1,8 @@
 #ifndef ALJ_SUPPLESEARCH_DOCUMENT_HPP_
 #define ALJ_SUPPLESEARCH_DOCUMENT_HPP_
 
+#include <memory>
+
 #include "tokenizer.hpp"
 #include "stemmer.hpp"
 #include "stemmers/dummy.hpp"
