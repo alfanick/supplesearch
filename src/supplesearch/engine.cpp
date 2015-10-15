@@ -24,9 +24,7 @@ Engine::Engine(const Database::shared database, const Database::shared keywords,
 ResultList Engine::query(const Document::shared q) {
   ResultList result;
 
-  measure_->query(q);
-
-  auto scores = measure_->compare();
+  auto scores = measure_->compare(q);
 
   int i = 0;
   for (const auto& document : database_->documents()) {

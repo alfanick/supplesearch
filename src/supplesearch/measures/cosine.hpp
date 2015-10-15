@@ -12,13 +12,10 @@ namespace Measures {
 class Cosine : public Measure {
   public:
     void keywords(WordList k) override;
-    void query(Document::shared q) override;
-    arma::vec compare() override;
-    double compare(Document::shared d) override;
+    arma::vec compare(SuppleSearch::Document::shared query) override;
 
   private:
     Algorithms::TFIDF::shared tfidf_;
-    arma::vec query_tfidf_;
 };
 
 }

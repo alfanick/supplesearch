@@ -15,9 +15,7 @@ class Measure {
     virtual void keywords(WordList k) { keywords_ = k; }
     void database(Database::shared database) { database_ = database; }
 
-    virtual void query(Document::shared q) = 0;
-    virtual arma::vec compare() = 0;
-    virtual double compare(Document::shared d) = 0;
+    virtual arma::vec compare(Document::shared d) = 0;
 
   protected:
     WordList keywords_;
