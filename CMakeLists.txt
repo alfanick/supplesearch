@@ -43,7 +43,7 @@ ExternalProject_Add(porter
   GIT_REPOSITORY "https://github.com/smassung/porter2_stemmer.git"
   PREFIX "${EXT_PROJECTS_DIR}/porter"
 
-  CMAKE_ARGS -DCMAKE_CXX_FLAGS:STRING="-fPIC"
+  CMAKE_ARGS -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS} -fPIC
   INSTALL_COMMAND ""
   UPDATE_COMMAND ""
 
