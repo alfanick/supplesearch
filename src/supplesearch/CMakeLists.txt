@@ -4,6 +4,6 @@ file(GLOB_RECURSE SUPPLESEARCH_SRC_FILES "${PROJECT_SOURCE_DIR}/src/supplesearch
 include_directories(${COMMON_INCLUDES} ${SUPPLESEARCH_INCLUDES} ${PORTER_INCLUDES_DIR} ${ARMA_INCLUDES_DIR})
 
 add_library(supplesearch SHARED ${SUPPLESEARCH_SRC_FILES})
-target_link_libraries(supplesearch "${BLAS_LIB_FLAGS}")
+target_link_libraries(supplesearch "${BLAS_LIB_FLAGS}" "${PORTER_LIBS_DIR}/libporter2-stemmer.a")
 
 install (TARGETS supplesearch DESTINATION bin)
