@@ -32,6 +32,11 @@ int main(int argc, char** argv)
   for (auto result : results) {
     if (!isnan(result.first) && (result.first > 0)) {
       std::cout << result.second->title() << " " << result.first << std::endl;
+      std::cout << result.second->content();
+      for (auto stem : result.second->stemmed_content()) {
+        std::cout << stem << ' ';
+      }
+      std::cout << std::endl << std::endl;
     }
   }
 
