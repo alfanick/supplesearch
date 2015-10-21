@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 
   for (auto result : results) {
     if (!isnan(result.first) && (result.first > 0)) {
-      std::cout << std::setprecision(6) << result.first << "\t" << result.second->title() << std::endl << "--------" << std::endl;
+      std::cout << std::setw(8) << std::setprecision(6) << result.first << "\t" << result.second->title() << std::endl << "--------" << std::endl;
       std::cout << result.second->content();
       for (auto stem : result.second->stemmed_content()) {
         std::cout << stem << ' ';
