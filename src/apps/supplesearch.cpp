@@ -4,6 +4,7 @@
 
 #include <supplesearch/algorithms/inverse_document_frequency.hpp>
 
+#include <iomanip>
 #include <iostream>
 
 using namespace SuppleSearch;
@@ -31,12 +32,12 @@ int main(int argc, char** argv)
 
   for (auto result : results) {
     if (!isnan(result.first) && (result.first > 0)) {
-      std::cout << result.second->title() << " " << result.first << std::endl;
+      std::cout << std::setprecision(6) << result.first << "\t" << result.second->title() << std::endl << "--------" << std::endl;
       std::cout << result.second->content();
       for (auto stem : result.second->stemmed_content()) {
         std::cout << stem << ' ';
       }
-      std::cout << std::endl << std::endl;
+      std::cout << std::endl << std::endl << std::endl;
     }
   }
 
