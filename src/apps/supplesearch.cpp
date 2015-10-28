@@ -41,7 +41,7 @@ int main(int argc, char** argv)
     std::cout << " (consider ";
     size_t max_queries = proposed_queries.size() > 5 ? 5 : proposed_queries.size();
     for (size_t i = 0; i < max_queries; i++) {
-      std::cout << "\"" << argv[3] << ' ' << proposed_queries[i].second->content() << "\" [" << proposed_queries[i].first << "] ";
+      std::cout << "\"" << argv[3] << ' ' << proposed_queries[i].second->content() << "\" [" << std::setprecision(4) << proposed_queries[i].first << "] ";
     }
     std::cout << ")";
   }
