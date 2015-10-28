@@ -14,7 +14,7 @@ std::vector<std::set<size_t>> CovarianceMatrix::find_best(const arma::vec old, s
   arma::vec possible(old);
 
   for (size_t i = 0; i < possible.size(); i++) {
-    if (vis.find(i) != vis.end() || old(i) < 0.1)
+    if (vis.find(i) != vis.end() || old(i) < 0.01)
       continue;
     arma::uword index;
     possible.max(index);
