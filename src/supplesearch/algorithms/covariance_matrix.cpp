@@ -53,6 +53,7 @@ SuppleSearch::ResultList CovarianceMatrix::process(SuppleSearch::Document::share
 
 
   arma::vec possible(keywords_list.size());
+  possible.zeros();
   auto stemmed_query = query->stemmed_content();
   for (size_t i = 0; i < stemmed_query.size(); i++) {
     size_t index = std::find(keywords_list.begin(), keywords_list.end(), stemmed_query[i]) - keywords_list.begin();
