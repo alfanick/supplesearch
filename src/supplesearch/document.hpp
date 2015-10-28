@@ -2,6 +2,7 @@
 #define ALJ_SUPPLESEARCH_DOCUMENT_HPP_
 
 #include <memory>
+#include <map>
 
 #include "tokenizer.hpp"
 #include "stemmer.hpp"
@@ -55,6 +56,8 @@ class Document {
      */
     const std::string title() { return title_; }
 
+    const std::string unstem(std::string word);
+
   private:
     //! Document title
     std::string title_;
@@ -62,6 +65,8 @@ class Document {
     std::string content_;
     //! Processed stemmed content
     WordList stemmed_content_;
+    //! Last stemming map
+    std::map<std::string, std::string> stemming_map_;
 };
 
 }

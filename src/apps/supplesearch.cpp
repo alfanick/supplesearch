@@ -3,6 +3,7 @@
 #include <supplesearch/measures/cosine.hpp>
 
 #include <supplesearch/algorithms/inverse_document_frequency.hpp>
+#include <supplesearch/algorithms/covariance_matrix.hpp>
 
 #include <iomanip>
 #include <iostream>
@@ -11,7 +12,7 @@ using namespace SuppleSearch;
 
 int main(int argc, char** argv)
 {
-  if (argc != 4) {
+  if (argc < 4) {
     std::cout << "Usage: ss database keywords query" << std::endl;
     return 1;
   }
@@ -20,6 +21,7 @@ int main(int argc, char** argv)
   Databases::Text::shared keywords(Databases::Text::build(argv[2]));
   Measure::shared measure(new Measures::Cosine());
   Engine engine(db, keywords, measure);
+  Algorithms::CovarianceMatrix covariance_matrix(db, keywords);
 
   // Algorithms::InverseDocumentFrequency idf(db);
   // auto qt = idf.process(engine.keywords());
@@ -28,7 +30,23 @@ int main(int argc, char** argv)
   //   std::cout << qt(i++) << "\t" << stem << std::endl;
   // }
 
-  auto results = engine.query(argv[3]);
+  auto query = db->build_document("query", argv[3]);
+  auto results = engine.query(query);
+
+  std::cout << "Results for \"" << argv[3] << "\"";
+
+  if (argc == 5) {
+    auto proposed_queries = covariance_matrix.process(query, 5, std::stoul(argv[4]));
+
+    std::cout << " (consider ";
+    size_t max_queries = proposed_queries.size() > 5 ? 5 : proposed_queries.size();
+    for (size_t i = 0; i < max_queries; i++) {
+      std::cout << "\"" << argv[3] << ' ' << proposed_queries[i].second->content() << "\" [" << proposed_queries[i].first << "] ";
+    }
+    std::cout << ")";
+  }
+
+  std::cout << ":" << std::endl << std::endl;
 
   for (auto result : results) {
     if (!isnan(result.first) && (result.first > 0)) {
