@@ -36,10 +36,10 @@ int main(int argc, char** argv)
   std::cout << "Results for \"" << argv[3] << "\"";
 
   if (argc == 5) {
-    auto proposed_queries = covariance_matrix.process(query, 5, std::stoul(argv[4]));
+    auto proposed_queries = covariance_matrix.process(query, 10, std::stoul(argv[4]));
 
     std::cout << " (consider ";
-    size_t max_queries = proposed_queries.size() > 5 ? 5 : proposed_queries.size();
+    size_t max_queries = proposed_queries.size() > 10 ? 10 : proposed_queries.size();
     for (size_t i = 0; i < max_queries; i++) {
       std::cout << "\"" << argv[3] << ' ' << proposed_queries[i].second->content() << "\" [" << std::setprecision(4) << proposed_queries[i].first << "] ";
     }

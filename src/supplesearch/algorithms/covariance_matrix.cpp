@@ -14,7 +14,7 @@ std::vector<std::set<size_t>> CovarianceMatrix::find_best(const arma::vec old, s
   arma::vec possible(old);
 
   for (size_t i = 0; i < possible.size(); i++) {
-    if (vis.find(i) != vis.end() || old(i) < 0.5)
+    if (vis.find(i) != vis.end() || old(i) < 0.1)
       continue;
     arma::uword index;
     possible.max(index);
@@ -53,7 +53,7 @@ SuppleSearch::ResultList CovarianceMatrix::process(SuppleSearch::Document::share
 
 
   arma::vec possible(keywords_list.size());
-  possible.zeros();
+  possible.ones();
   auto stemmed_query = query->stemmed_content();
   for (size_t i = 0; i < stemmed_query.size(); i++) {
     size_t index = std::find(keywords_list.begin(), keywords_list.end(), stemmed_query[i]) - keywords_list.begin();
@@ -61,7 +61,8 @@ SuppleSearch::ResultList CovarianceMatrix::process(SuppleSearch::Document::share
     arma::vec current = cm.col(index);
     current.elem(arma::find_nonfinite(current)).zeros();
     current(index) = arma::datum::nan;
-    possible += current;
+    // !
+    possible %= current;
   }
 
   SuppleSearch::ResultList proposed_queries;
