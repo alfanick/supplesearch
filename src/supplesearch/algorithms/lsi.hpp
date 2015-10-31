@@ -11,14 +11,14 @@ class LSI : public TFIDF {
     //! Shared pointer
     typedef std::shared_ptr<LSI> shared;
 
-    LSI(size_t degree);
+    LSI(double precision);
 
     virtual arma::mat process(SuppleSearch::Database::shared database) override;
 
     virtual arma::vec process(SuppleSearch::Database::shared database, SuppleSearch::Document::shared document) override;
 
   protected:
-    size_t degree_;
+    double precision_;
 };
 
 }
