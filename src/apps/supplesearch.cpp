@@ -13,32 +13,27 @@ using namespace SuppleSearch;
 
 int main(int argc, char** argv)
 {
-  if (argc < 4) {
-    std::cout << "Usage: ss database keywords query" << std::endl;
+  if (argc < 5) {
+    std::cout << "Usage: ss database keywords query precision extra" << std::endl;
     return 1;
   }
+
+  double precision = std::stof(argv[4]);
 
   Databases::Text::shared db(Databases::Text::build(argv[1]));
   Databases::Text::shared keywords(Databases::Text::build(argv[2]));
   Measure::shared measure(new Measures::Cosine());
-  Algorithms::TFIDF::shared tfidf(new Algorithms::LSI(0.75));
+  Algorithms::TFIDF::shared tfidf(precision < 1.0 ? new Algorithms::LSI(precision) : new Algorithms::TFIDF());
   Engine engine(db, keywords, tfidf, measure);
   Algorithms::CovarianceMatrix covariance_matrix(db, keywords);
-
-  // Algorithms::InverseDocumentFrequency idf(db);
-  // auto qt = idf.process(engine.keywords());
-  // int i = 0;
-  // for (auto stem : engine.keywords()) {
-  //   std::cout << qt(i++) << "\t" << stem << std::endl;
-  // }
 
   auto query = db->build_document("query", argv[3]);
   auto results = engine.query(query);
 
   std::cout << "Results for \"" << argv[3] << "\"";
 
-  if (argc == 5) {
-    auto proposed_queries = covariance_matrix.process(query, 10, std::stoul(argv[4]));
+  if (argc == 6) {
+    auto proposed_queries = covariance_matrix.process(query, 10, std::stoul(argv[5]));
 
     std::cout << " (consider ";
     size_t max_queries = proposed_queries.size() > 10 ? 10 : proposed_queries.size();
