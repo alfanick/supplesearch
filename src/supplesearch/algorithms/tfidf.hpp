@@ -14,13 +14,9 @@ class TFIDF {
     //! Shared pointer
     typedef std::shared_ptr<TFIDF> shared;
 
-    /**
-     * Create instance of TFIDF working
-     * on given keywords.
-     *
-     * @param keywords Keywords to process
-     */
-    TFIDF(SuppleSearch::WordList keywords);
+    TFIDF() {}
+
+    void keywords(SuppleSearch::WordList kw);
 
     /**
      * Calculate TFIDF represenation
@@ -29,7 +25,7 @@ class TFIDF {
      * @param database Database to process
      * @return TFIDF representation
      */
-    arma::mat process(SuppleSearch::Database::shared database);
+    virtual arma::mat process(SuppleSearch::Database::shared database);
 
     /**
      * Calculate TFIDF of query outside
@@ -39,13 +35,13 @@ class TFIDF {
      * @param document Query
      * @return TFIDF representation
      */
-    arma::vec process(SuppleSearch::Database::shared database, SuppleSearch::Document::shared document);
+    virtual arma::vec process(SuppleSearch::Database::shared database, SuppleSearch::Document::shared document);
 
-  private:
+  protected:
     //! Keywords to process
     SuppleSearch::WordList keywords_;
     //! TF algorithm
-    TermFrequency term_frequency_;
+    TermFrequency::shared term_frequency_;
 
 };
 

@@ -4,14 +4,15 @@
 
 using namespace SuppleSearch::Algorithms;
 
-TFIDF::TFIDF(SuppleSearch::WordList keywords) :
-  keywords_(keywords), term_frequency_(keywords) {
+void TFIDF::keywords(SuppleSearch::WordList kw) {
+  keywords_ = kw;
+  term_frequency_ = std::make_shared<Algorithms::TermFrequency>(kw);
 }
 
 arma::mat TFIDF::process(SuppleSearch::Database::shared database) {
   InverseDocumentFrequency inverse_document_frequency(database);
 
-  arma::mat tfidf = term_frequency_.process(database);
+  arma::mat tfidf = term_frequency_->process(database);
   arma::vec idf = inverse_document_frequency.process(keywords_);
 
   for (size_t i = 0; i < tfidf.n_cols; i++) {
@@ -25,7 +26,7 @@ arma::vec TFIDF::process(SuppleSearch::Database::shared database, SuppleSearch::
   InverseDocumentFrequency inverse_document_frequency(database);
 
   arma::vec idf = inverse_document_frequency.process(keywords_);
-  arma::vec tfidf = term_frequency_.process(document);
+  arma::vec tfidf = term_frequency_->process(document);
 
   return tfidf % idf;
 }

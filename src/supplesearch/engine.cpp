@@ -4,11 +4,21 @@
 #include <set>
 #include <memory>
 
+#include "algorithms/lsi.hpp"
+
 using namespace SuppleSearch;
 
-Engine::Engine(const Database::shared database, const Database::shared keywords, const Measure::shared measure) :
+Engine::Engine(const Database::shared database, const Database::shared kw, Algorithms::TFIDF::shared algorithm, const Measure::shared measure) :
   measure_(measure),
-  database_(database) {
+  database_(database),
+  tfidf_(algorithm) {
+  make_keywords(kw);
+
+  tfidf_->keywords(keywords_);
+  database_tfidf_ = tfidf_->process(database_);
+}
+
+void Engine::make_keywords(const Database::shared keywords) {
   std::set<std::string> s;
 
   for (auto document : keywords->documents()) {
@@ -17,9 +27,6 @@ Engine::Engine(const Database::shared database, const Database::shared keywords,
   }
 
   keywords_.insert(keywords_.end(), s.begin(), s.end());
-
-  tfidf_ = std::make_shared<Algorithms::TFIDF>(keywords_);
-  database_tfidf_ = tfidf_->process(database_);
 }
 
 ResultList Engine::query(const Document::shared q) {

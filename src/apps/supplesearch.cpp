@@ -20,7 +20,8 @@ int main(int argc, char** argv)
   Databases::Text::shared db(Databases::Text::build(argv[1]));
   Databases::Text::shared keywords(Databases::Text::build(argv[2]));
   Measure::shared measure(new Measures::Cosine());
-  Engine engine(db, keywords, measure);
+  Algorithms::TFIDF::shared tfidf(new Algorithms::TFIDF());
+  Engine engine(db, keywords, tfidf, measure);
   Algorithms::CovarianceMatrix covariance_matrix(db, keywords);
 
   // Algorithms::InverseDocumentFrequency idf(db);

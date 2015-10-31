@@ -13,6 +13,8 @@ namespace Algorithms {
  */
 class TermFrequency {
   public:
+    typedef std::shared_ptr<TermFrequency> shared;
+
     /**
      * Create TermFrequency algorithm with
      * given keywords.

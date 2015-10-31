@@ -25,9 +25,10 @@ class Engine {
      *
      * @param database Available documents
      * @param keywords Available keywords
+     * @param algorithm Used scoring algorithm
      * @param measure Used measure
      */
-    Engine(const Database::shared database, const Database::shared keywords, const Measure::shared measure);
+    Engine(const Database::shared database, const Database::shared keywords, Algorithms::TFIDF::shared algorithm, const Measure::shared measure);
 
     /**
      * Query Database.
@@ -53,6 +54,8 @@ class Engine {
     WordList keywords() { return keywords_; }
 
   private:
+    void make_keywords(const Database::shared keywords);
+
     //! Used measure
     Measure::shared measure_;
     //! Documents
