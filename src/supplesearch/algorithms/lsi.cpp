@@ -30,7 +30,7 @@ arma::mat LSI::process(SuppleSearch::Database::shared database) {
   return R;
 }
 
-// TODO OPTIMIZE ME!
+// TODO BUUUUG IT DOES NOT WORK
 arma::vec LSI::process(SuppleSearch::Database::shared database, SuppleSearch::Document::shared document) {
   auto tfidf = TFIDF::process(database);
   auto document_tfidf = TFIDF::process(database, document);
@@ -46,15 +46,16 @@ arma::vec LSI::process(SuppleSearch::Database::shared database, SuppleSearch::Do
 
   s.resize(degree);
   K.shed_cols(degree, K.n_cols-1);
-  D.shed_cols(degree, D.n_cols-1);
+  // D.shed_cols(degree, D.n_cols-1);
 
   Si = arma::diagmat(s).i();
 
+  document_tfidf.t().print();
   document_tfidf.resize(tfidf.n_cols);
-  arma::mat document_tfidf_mat(arma::size(K));
-  document_tfidf_mat.col(0) = document_tfidf;
   arma::mat R = document_tfidf.t() * K * Si;
   arma::vec r(R.row(0).t());
   r.resize(tfidf.n_rows);
+  r.t().print();
+  // TODO hmm remove degrees from query, than ask not reconstructed
   return r;
 }
