@@ -21,7 +21,7 @@ int main(int argc, char** argv)
   Databases::Text::shared db(Databases::Text::build(argv[1]));
   Databases::Text::shared keywords(Databases::Text::build(argv[2]));
   Measure::shared measure(new Measures::Cosine());
-  Algorithms::TFIDF::shared tfidf(new Algorithms::LSI(0.75));
+  Algorithms::TFIDF::shared tfidf(new Algorithms::LSI(0.5));
   Engine engine(db, keywords, tfidf, measure);
   Algorithms::CovarianceMatrix covariance_matrix(db, keywords);
 
