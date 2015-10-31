@@ -12,14 +12,7 @@ class Measure {
   public:
     typedef std::shared_ptr<Measure> shared;
 
-    virtual void keywords(WordList k) { keywords_ = k; }
-    void database(Database::shared database) { database_ = database; }
-
-    virtual arma::vec compare(Document::shared d) = 0;
-
-  protected:
-    WordList keywords_;
-    Database::shared database_;
+    virtual arma::vec compare(arma::mat document, arma::vec query) = 0;
 };
 
 }

@@ -4,6 +4,7 @@
 #include "database.hpp"
 #include "measure.hpp"
 #include "document.hpp"
+#include "algorithms/tfidf.hpp"
 
 namespace SuppleSearch {
 
@@ -58,6 +59,10 @@ class Engine {
     Database::shared database_;
     //! Available keywords
     WordList keywords_;
+    //! TFIDF
+    Algorithms::TFIDF::shared tfidf_;
+    //! Database TFIDF scores
+    arma::mat database_tfidf_;
 };
 
 }

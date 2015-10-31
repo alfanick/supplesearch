@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <set>
+#include <memory>
 
 using namespace SuppleSearch;
 
@@ -17,14 +18,15 @@ Engine::Engine(const Database::shared database, const Database::shared keywords,
 
   keywords_.insert(keywords_.end(), s.begin(), s.end());
 
-  measure_->keywords(keywords_);
-  measure_->database(database_);
+  tfidf_ = std::make_shared<Algorithms::TFIDF>(keywords_);
+  database_tfidf_ = tfidf_->process(database_);
 }
 
 ResultList Engine::query(const Document::shared q) {
   ResultList result;
 
-  auto scores = measure_->compare(q);
+  auto query_tfidf = tfidf_->process(database_, q);
+  auto scores = measure_->compare(database_tfidf_, query_tfidf);
 
   int i = 0;
   for (const auto& document : database_->documents()) {
