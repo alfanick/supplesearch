@@ -11,51 +11,36 @@ arma::mat LSI::process(SuppleSearch::Database::shared database) {
   auto tfidf = TFIDF::process(database);
   size_t degree = (size_t)(tfidf.n_rows * precision_);
 
-  arma::mat tfidf_squared(tfidf);
-  tfidf_squared.resize(tfidf.n_cols, tfidf.n_cols);
-
-  arma::mat K, D, R;
+  arma::mat K, D;
   arma::vec s;
 
-  arma::svd(K, s, D, tfidf_squared);
+  arma::svd(K, s, D, tfidf);
 
   s.resize(degree);
   K.shed_cols(degree, K.n_cols-1);
-  D.shed_cols(degree, D.n_cols-1);
 
-  R = K * arma::diagmat(s) * D.t();
-
-  R.resize(arma::size(tfidf));
+  arma::mat Si = arma::diagmat(s).i();
+  arma::mat R = (tfidf.t() * K * Si).t();
 
   return R;
 }
 
-// TODO BUUUUG IT DOES NOT WORK
+// TODO Optimize me
 arma::vec LSI::process(SuppleSearch::Database::shared database, SuppleSearch::Document::shared document) {
   auto tfidf = TFIDF::process(database);
   auto document_tfidf = TFIDF::process(database, document);
   size_t degree = (size_t)(tfidf.n_rows * precision_);
 
-  arma::mat tfidf_squared(tfidf);
-  tfidf_squared.resize(tfidf.n_cols, tfidf.n_cols);
-
-  arma::mat K, D, Si;
+  arma::mat K, D;
   arma::vec s;
 
-  arma::svd(K, s, D, tfidf_squared);
+  arma::svd(K, s, D, tfidf);
 
   s.resize(degree);
   K.shed_cols(degree, K.n_cols-1);
-  // D.shed_cols(degree, D.n_cols-1);
 
-  Si = arma::diagmat(s).i();
+  arma::mat Si = arma::diagmat(s).i();
+  arma::vec R = (document_tfidf.t() * K * Si).t();
 
-  document_tfidf.t().print();
-  document_tfidf.resize(tfidf.n_cols);
-  arma::mat R = document_tfidf.t() * K * Si;
-  arma::vec r(R.row(0).t());
-  r.resize(tfidf.n_rows);
-  r.t().print();
-  // TODO hmm remove degrees from query, than ask not reconstructed
-  return r;
+  return R;
 }
