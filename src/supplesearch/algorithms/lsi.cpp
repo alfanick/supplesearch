@@ -8,39 +8,27 @@ LSI::LSI(double precision)
 }
 
 arma::mat LSI::process(SuppleSearch::Database::shared database) {
-  auto tfidf = TFIDF::process(database);
-  size_t degree = (size_t)(tfidf.n_rows * precision_);
+  tfidf_ = TFIDF::process(database);
+  degree_ = (size_t)(tfidf_.n_rows * precision_);
 
-  arma::mat K, D;
+  arma::mat D;
   arma::vec s;
 
-  arma::svd(K, s, D, tfidf);
+  arma::svd(K_, s, D, tfidf_);
 
-  s.resize(degree);
-  K.shed_cols(degree, K.n_cols-1);
+  s.resize(degree_);
+  K_.shed_cols(degree_, K_.n_cols-1);
+  D.shed_cols(degree_, D.n_cols-1);
 
-  arma::mat Si = arma::diagmat(s).i();
-  arma::mat R = (tfidf.t() * K * Si).t();
+  Si_ = arma::diagmat(s).i();
 
-  return R;
+  return D.t();
 }
 
-// TODO Optimize me
 arma::vec LSI::process(SuppleSearch::Database::shared database, SuppleSearch::Document::shared document) {
-  auto tfidf = TFIDF::process(database);
   auto document_tfidf = TFIDF::process(database, document);
-  size_t degree = (size_t)(tfidf.n_rows * precision_);
 
-  arma::mat K, D;
-  arma::vec s;
-
-  arma::svd(K, s, D, tfidf);
-
-  s.resize(degree);
-  K.shed_cols(degree, K.n_cols-1);
-
-  arma::mat Si = arma::diagmat(s).i();
-  arma::vec R = (document_tfidf.t() * K * Si).t();
+  arma::vec R = (document_tfidf.t() * K_ * Si_).t();
 
   return R;
 }

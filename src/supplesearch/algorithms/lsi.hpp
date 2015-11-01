@@ -19,6 +19,11 @@ class LSI : public TFIDF {
 
   protected:
     double precision_;
+    size_t degree_;
+
+    arma::mat tfidf_;
+    arma::mat K_;
+    arma::mat Si_;
 };
 
 }
