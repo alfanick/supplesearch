@@ -14,6 +14,8 @@ namespace Algorithms {
  */
 class InverseDocumentFrequency {
   public:
+    typedef std::shared_ptr<InverseDocumentFrequency> shared;
+
     /**
      * Create new InverseDocumentFrequency algorithm
      * on given Database.

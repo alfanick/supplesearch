@@ -2,6 +2,8 @@
 #define ALJ_SUPPLESEARCH_ALGORITHMS_TFIDF_HPP_
 
 #include "term_frequency.hpp"
+#include "inverse_document_frequency.hpp"
+
 
 namespace SuppleSearch {
 namespace Algorithms {
@@ -42,6 +44,8 @@ class TFIDF {
     SuppleSearch::WordList keywords_;
     //! TF algorithm
     TermFrequency::shared term_frequency_;
+    //! IDF algorithm
+    InverseDocumentFrequency::shared inverse_document_frequency_;
 
 };
 
