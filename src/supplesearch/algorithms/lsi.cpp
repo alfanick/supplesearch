@@ -17,10 +17,12 @@ arma::mat LSI::process(SuppleSearch::Database::shared database) {
   arma::svd(K_, s, D, tfidf_);
 
   s.resize(degree_);
+  D.resize(D.n_rows, K_.n_cols);
+
   K_.shed_cols(degree_, K_.n_cols-1);
   D.shed_cols(degree_, D.n_cols-1);
 
-  Si_ = arma::diagmat(s).i();
+  Si_ = arma::pinv(arma::diagmat(s));
 
   return D.t();
 }
