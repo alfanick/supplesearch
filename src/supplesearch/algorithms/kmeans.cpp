@@ -29,8 +29,6 @@ arma::vec KMeans::process(arma::mat documents) {
     used_documents.insert(index);
   }
 
-  std::multimap<arma::uword, size_t> previous_clusters;
-
   for (size_t iteration = 0; iteration < max_iterations_; iteration++) {
     // calculate distances
     for (size_t document = 0; document < documents.n_cols; document++) {
