@@ -1,6 +1,6 @@
 #include "kmeans.hpp"
 
-#include <map>
+#include <set>
 
 using namespace SuppleSearch::Algorithms;
 
@@ -15,9 +15,18 @@ arma::vec KMeans::process(arma::mat documents) {
   arma::mat centroids = arma::zeros(k_, documents.n_rows);
   arma::vec current_clusters = arma::zeros(documents.n_cols);
 
+  std::set<size_t> used_documents;
+
   // random seed
   for (size_t i = 0; i < k_; i++) {
-    centroids.row(i) = documents.col(rand() % documents.n_cols).t();
+    size_t index;
+
+    do {
+      index = rand() % documents.n_cols;
+    } while(used_documents.find(index) != used_documents.end());
+
+    centroids.row(i) = documents.col(index).t();
+    used_documents.insert(index);
   }
 
   std::multimap<arma::uword, size_t> previous_clusters;
