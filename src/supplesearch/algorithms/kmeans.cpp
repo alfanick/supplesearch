@@ -69,6 +69,8 @@ arma::vec KMeans::process(arma::mat documents) {
         size++;
       }
 
+      mean /= size;
+
       centroids.row(cluster) = mean.t();
     }
   }
