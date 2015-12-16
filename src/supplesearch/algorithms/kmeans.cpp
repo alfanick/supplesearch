@@ -7,6 +7,7 @@ using namespace SuppleSearch::Algorithms;
 KMeans::KMeans(Measure::shared measure, size_t k, size_t max_iterations)
   : k_(k), max_iterations_(max_iterations), measure_(measure) {
   srand(time(0));
+  // srand(123);
 }
 
 arma::vec KMeans::process(arma::mat documents) {
@@ -29,7 +30,6 @@ arma::vec KMeans::process(arma::mat documents) {
       }
     }
 
-    std::multimap<arma::uword, size_t> clusters;
     bool has_changed = false;
 
     // find closest centroid and assign to cluster
@@ -37,7 +37,6 @@ arma::vec KMeans::process(arma::mat documents) {
       arma::uword cluster;
 
       distances.col(document).max(cluster);
-      clusters.emplace(cluster, document);
 
       if (current_clusters(document) != cluster) {
         current_clusters(document) = cluster;
@@ -52,13 +51,14 @@ arma::vec KMeans::process(arma::mat documents) {
 
     // calculate new centroid
     for (size_t cluster = 0; cluster < k_; cluster++) {
-      auto range = clusters.equal_range(cluster);
-      size_t size = 0;
       arma::vec mean = arma::zeros(documents.n_rows);
+      size_t size = 0;
 
-      for (auto assignment = range.first; assignment != range.second; ++assignment) {
-        mean += documents.col(assignment->second);
+      for (size_t document = 0; document < current_clusters.n_rows; document++) {
+        if (current_clusters(document) != cluster)
+          continue;
 
+        mean += documents.col(document);
         size++;
       }
 
