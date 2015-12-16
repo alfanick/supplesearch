@@ -7,3 +7,8 @@ add_executable(ss "${PROJECT_SOURCE_DIR}/src/apps/supplesearch.cpp")
 add_dependencies(ss arma)
 target_link_libraries(ss supplesearch "${BLAS_LIB_FLAGS}")
 install(TARGETS ss DESTINATION bin)
+
+add_executable(sskm "${PROJECT_SOURCE_DIR}/src/apps/supplesearch-kmeans.cpp")
+add_dependencies(sskm arma)
+target_link_libraries(sskm supplesearch "${BLAS_LIB_FLAGS}")
+install(TARGETS sskm DESTINATION bin)

@@ -10,6 +10,7 @@ namespace Measures {
 
 class Cosine : public Measure {
   public:
+    double compare(arma::vec a, arma::vec b) override;
     arma::vec compare(arma::mat documents, arma::vec query) override;
 };
 
